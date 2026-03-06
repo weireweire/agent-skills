@@ -9,7 +9,22 @@ When helping with SLURM job operations:
 
 1. **Submit jobs**:
    ```bash
-   srtctl submit -f <config>.yaml
+   srtctl apply -f <config>.yaml
+   ```
+
+   **Job naming convention**: When submitting jobs, use a descriptive name with timestamp format: `MMDD-HHMM-<description>`. Set via the `name` field in the config yaml. Example: `0306-0530-prefill-1req-test`.
+
+   **Using temp configs**: When testing config variations without modifying the repo file, copy to `/tmp/` and modify there:
+   ```bash
+   cp recipes/path/to/config.yaml /tmp/my-test.yaml
+   # modify /tmp/my-test.yaml
+   srtctl apply -f /tmp/my-test.yaml
+   ```
+
+   **Exclude bad nodes**: Add `sbatch_directives` to the config yaml to exclude known-bad nodes:
+   ```yaml
+   sbatch_directives:
+     exclude: "gpu-[5,8]"
    ```
 
 2. **Dry run** (preview generated commands without submitting):
