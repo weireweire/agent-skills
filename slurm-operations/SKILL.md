@@ -49,3 +49,5 @@ When helping with SLURM job operations:
    - Container mount failures: verify paths in `container_mounts`
 
 can use --setup-script to do custom operation in container. Can use extra_mount to add custom mount to container. combine this two can install custom package.
+
+when debugging, can use load-format: dummy and disable-cuda-graph to speed up if not relavent.
