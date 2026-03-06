@@ -1,0 +1,46 @@
+# Git Workflow for srt-slurm
+
+## Golden Rule: Never push directly to origin
+
+- `origin` (ishandhanani/srt-slurm) is the upstream repo. Do NOT push directly to it.
+- Always push to `fork` (weireweire/srt-slurm) and file a PR.
+
+## Remotes
+
+- `origin`: https://github.com/ishandhanani/srt-slurm.git (upstream, read-only)
+- `fork`: git@github.com:weireweire/srt-slurm.git (user's fork, push here)
+
+## Branching
+
+- When the user asks to "switch to" a branch, check if it exists on remote first (`git fetch origin <branch>` or `git fetch fork <branch>`) before creating a new one.
+- If the branch already exists remotely, track it: `git checkout -b <branch> <remote>/<branch>`
+- If you accidentally created a local branch without tracking, use `git reset --hard <remote>/<branch>` and `git branch -u <remote>/<branch>` to fix it.
+
+## Committing
+
+- Only commit when explicitly asked by the user.
+- "提交" (submit) in context of recipes/configs likely means submitting a SLURM job (`srtctl apply`), NOT a git commit. Ask for clarification if ambiguous.
+- When the user says "提交任务" or "提交测试", they mean submitting a SLURM job.
+- When the user says "提交代码" or "commit", they mean a git commit.
+
+## Pushing
+
+- Push to `fork`, not `origin`:
+  ```bash
+  git push fork <branch-name>
+  ```
+
+## Creating PRs with gh
+
+- Since `origin` is upstream (ishandhanani) and `fork` is user's repo, specify repo explicitly:
+  ```bash
+  gh pr create --repo ishandhanani/srt-slurm --head weireweire:<branch-name>
+  ```
+- Without `--head`, gh may fail or create the PR from the wrong fork.
+- Without `--repo`, gh defaults to origin which is correct, but always double-check the target.
+
+## Undoing Mistakes
+
+- If you accidentally pushed to origin, coordinate with the user to revert.
+- Use `git reset --hard <commit>` + `git push --force` only with explicit user confirmation.
+- Always confirm before any destructive git operation (force push, reset --hard, branch delete).
