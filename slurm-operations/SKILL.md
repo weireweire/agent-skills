@@ -47,3 +47,5 @@ When helping with SLURM job operations:
    - GPU allocation mismatch: verify `gpus_per_node` matches cluster hardware
    - Node connectivity: check head node IP and etcd/nats placement
    - Container mount failures: verify paths in `container_mounts`
+
+can use --setup-script to do custom operation in container. Can use extra_mount to add custom mount to container. combine this two can install custom package.
