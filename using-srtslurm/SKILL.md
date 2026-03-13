@@ -12,12 +12,12 @@ When helping with SLURM job operations:
    srtctl apply -f <config>.yaml -o OUTPUT_DIR
    ```
 
-   **Job naming convention**: When submitting jobs, use a descriptive name with timestamp format: `MMDD-HHMM-<description>` by `-o`.
+   **Job naming convention**: When submitting jobs, use a descriptive name with timestamp format: `MMDD-HHMM-<description>` and store in outputs dir by `-o`.
 
    **Exclude bad nodes**: Add `sbatch_directives` to the config yaml to exclude known-bad nodes:
    ```yaml
    sbatch_directives:
-     exclude: "gpu-[5,8]"
+     exclude: "gpu-[1,5]"
    ```
 
 2. **Dry run** (preview generated commands without submitting):
@@ -37,3 +37,7 @@ When helping with SLURM job operations:
 can use --setup-script to do custom operation in container. Can use extra_mount to add custom mount to container. combine this two can install custom package.
 
 when debugging, can use load-format: dummy and disable-cuda-graph to speed up if not relavent.
+
+cluster specific config is in srtslurm.yaml.
+
+print log dir after submit mission.

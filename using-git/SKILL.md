@@ -30,6 +30,12 @@ When performing git operations:
    gh pr create --repo ishandhanani/srt-slurm --head weireweire:<branch-name>
    ```
    - Without `--head`, gh may create the PR from the wrong fork
+   - When passing `--title` or `--body` through the shell, avoid backticks in inline text. Shell command substitution will eat content like `` `config.yaml` ``. Prefer plain text, single-quoted heredocs, or `--body-file`.
+   - If `gh pr edit` fails with GitHub GraphQL/project-card errors, fall back to REST:
+   ```bash
+   gh api repos/ishandhanani/srt-slurm/pulls/<pr-number> --method PATCH --input <json-file>
+   ```
+   - When the worktree is dirty, stage only the files intended for the PR and verify with `git status --short` / `git diff --cached --stat` before committing.
 
 5. **Destructive operations**:
    - Always confirm with user before `git reset --hard`, `git push --force`, or branch deletion
